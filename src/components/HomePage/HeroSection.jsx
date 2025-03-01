@@ -1,0 +1,1 @@
+import React from "react"; export const HeroSection = () => { return (<div id="HeroSection_1"><h1 id="HeroSection_2">Welcome to Our Website</h1><button id="HeroSection_3">Get Started</button></div>)}

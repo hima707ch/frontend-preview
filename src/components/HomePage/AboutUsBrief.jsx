@@ -1,0 +1,1 @@
+import React from "react"; export const AboutUsBrief = () => { return (<div id="AboutUsBrief_1"><h2 id="AboutUsBrief_2">About Us</h2><p id="AboutUsBrief_3">We are a passionate team dedicated to delivering excellence.</p></div>)}

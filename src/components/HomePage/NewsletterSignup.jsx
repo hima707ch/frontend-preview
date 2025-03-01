@@ -1,0 +1,1 @@
+import React, { useState } from "react"; export const NewsletterSignup = () => { const [email, setEmail] = useState(""); return (<div id="NewsletterSignup_1"><input id="NewsletterSignup_2" type="email" value={email} onChange={(e) => setEmail(e.target.value)} /><button id="NewsletterSignup_3">Subscribe</button></div>)};

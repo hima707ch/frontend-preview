@@ -1,0 +1,1 @@
+import React from 'react'; export const HeroBanner = () => { return (<div id="HeroBanner_1"><h1 id="HeroBanner_2">Welcome to Our Website</h1><button id="HeroBanner_3">Get Started</button></div>)}

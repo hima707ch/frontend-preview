@@ -1,0 +1,1 @@
+import React from 'react'; export const SocialLoginButtons = () => { return (<div id="SocialLoginButtons_1"><button id="SocialLoginButtons_2">Google Login</button><button id="SocialLoginButtons_3">Facebook Login</button></div>)}
