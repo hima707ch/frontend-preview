@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 const PostForm = ({ existingPost, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -88,22 +86,7 @@ const PostForm = ({ existingPost, onSubmit }) => {
 
       <div className="space-y-2" id="PostForm_5">
         <label className="block text-sm font-medium text-gray-700">Content</label>
-        <ReactQuill
-          value={formData.content}
-          onChange={(content) => setFormData({ ...formData, content })}
-          className={`bg-white ${errors.content ? 'border-red-500' : ''}`}
-          theme="snow"
-          modules={{
-            toolbar: [
-              [{ 'header': [1, 2, false] }],
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-              ['link', 'image'],
-              ['clean']
-            ],
-          }}
-        />
+        
         {errors.content && <p className="text-red-500 text-sm">{errors.content}</p>}
       </div>
 
