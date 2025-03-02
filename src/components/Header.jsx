@@ -84,9 +84,9 @@ const Header = () => {
   return (
     <header
       id="Header_1"
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${isSticky ? 'bg-white dark:bg-gray-800 shadow-md' : 'bg-transparent'} ${isDarkMode ? 'dark' : ''}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 mb-8 ${isSticky ? 'bg-white dark:bg-gray-800 shadow-md' : 'bg-transparent'} ${isDarkMode ? 'dark' : ''}`}
     >
-      <div className="container mx-auto px-4 py-6 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-6 mb-8 flex items-center justify-between">
         <div className="flex items-center">
           <img src={images[0]} alt="Logo" className="h-10 w-auto mr-4" />
           <span className="text-xl font-bold text-gray-800 dark:text-white">Real Estate</span>
@@ -186,12 +186,12 @@ const Header = () => {
       )}
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert" id="Header_9">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 mb-8" role="alert" id="Header_9">
           <strong className="font-bold">Error!</strong> {error}
         </div>
       )}
       {properties.length > 0 && (
-        <div className="container mx-auto px-4 py-8" id="Header_10">
+        <div className="container mx-auto px-4 py-8 mb-8" id="Header_10">
           <h2 className="text-2xl font-bold mb-4">Properties</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((property) => (
