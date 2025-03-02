@@ -1,19 +1,17 @@
 import React from "react";
 
-import PhotoGallery from "./PhotoGallery";
-import PropertyDescription from "./PropertyDescription";
-import AmenitiesList from "./AmenitiesList";
-import PriceDetails from "./PriceDetails";
-import ContactAgentForm from "./ContactAgentForm";
+import PropertyDetails from "./PropertyDetails";
+import ImageGallery from "./ImageGallery";
+import ContactForm from "./ContactForm";
+import MapLocation from "./MapLocation";
 
 const Body = () => {
   return (
     <div>
-      <PhotoGallery />
-      <PropertyDescription />
-      <AmenitiesList />
-      <PriceDetails />
-      <ContactAgentForm />
+      <PropertyDetails />
+      <ImageGallery />
+      <ContactForm />
+      <MapLocation />
     </div>
   );
 };
