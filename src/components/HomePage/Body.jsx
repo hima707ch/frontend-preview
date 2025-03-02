@@ -1,23 +1,23 @@
 import React from "react";
 
+import HeroSection from "./HeroSection";
 import SearchBar from "./SearchBar";
-import FeaturedPropertiesList from "./FeaturedPropertiesList";
-import AuthenticationCTA from "./AuthenticationCTA";
-import PersonalizedDashboardSnippet from "./PersonalizedDashboardSnippet";
-import QuickLinksSection from "./QuickLinksSection";
-import PropertyFilteringOptions from "./PropertyFilteringOptions";
-import RegistrationModal from "./RegistrationModal";
+import FeaturedProperties from "./FeaturedProperties";
+import PropertyList from "./PropertyList";
+import LatestNews from "./LatestNews";
+import Testimonials from "./Testimonials";
+import NewsletterSignup from "./NewsletterSignup";
 
 const Body = () => {
   return (
     <div>
+      <HeroSection />
       <SearchBar />
-      <FeaturedPropertiesList />
-      <AuthenticationCTA />
-      <PersonalizedDashboardSnippet />
-      <QuickLinksSection />
-      <PropertyFilteringOptions />
-      <RegistrationModal />
+      <FeaturedProperties />
+      <PropertyList />
+      <LatestNews />
+      <Testimonials />
+      <NewsletterSignup />
     </div>
   );
 };
