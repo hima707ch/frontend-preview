@@ -4,128 +4,103 @@ import images from '../assets/images';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
+  const [user, setUser] = useState(null);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: 'user', password: 'pass' })
+        body: JSON.stringify({
+          email: e.target.email.value,
+          password: e.target.password.value
+        })
       });
-      if (response.ok) {
-        setIsLoggedIn(true);
-      }
+      const data = await response.json();
+      setUser(data.user);
+      setIsLoggedIn(true);
+      localStorage.setItem('token', data.token);
     } catch (error) {
       console.error('Login failed:', error);
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST'
-      });
-      if (response.ok) {
-        setIsLoggedIn(false);
-      }
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
-
   return (
-    <header id="Header_1" className="fixed top-0 w-full bg-white shadow-lg z-50">
-      <nav className="container mx-auto px-6 py-3">
+    <header id="Header_1" className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+      <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Link to="/home" className="flex items-center">
-              <img id="Header_2" src={images[0]} alt="Logo" className="h-10 w-auto mr-2" />
-              <span id="Header_3" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">RealEstate</span>
-            </Link>
+            <img id="Header_2" src={images[0]} alt="Logo" className="h-10 w-10 rounded-full" />
+            <div className="ml-6 flex space-x-4">
+              <Link
+                id="Header_3"
+                to="/homepage"
+                className={`${location.pathname === '/homepage' ? 'bg-white text-blue-600' : 'text-white'} px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white hover:text-blue-600`}
+              >
+                Home
+              </Link>
+              <Link
+                id="Header_4"
+                to="/listingpage"
+                className={`${location.pathname === '/listingpage' ? 'bg-white text-blue-600' : 'text-white'} px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white hover:text-blue-600`}
+              >
+                Listings
+              </Link>
+            </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link
-              id="Header_4"
-              to="/home"
-              className={`${location.pathname === '/home' ? 'text-blue-600' : 'text-gray-600'} hover:text-blue-500 transition-colors duration-300`}
-            >
-              Home
-            </Link>
-            <Link
-              id="Header_5"
-              to="/listing"
-              className={`${location.pathname === '/listing' ? 'text-blue-600' : 'text-gray-600'} hover:text-blue-500 transition-colors duration-300`}
-            >
-              Listings
-            </Link>
-            <Link
-              id="Header_6"
-              to="/propertydetail"
-              className={`${location.pathname === '/propertydetail' ? 'text-blue-600' : 'text-gray-600'} hover:text-blue-500 transition-colors duration-300`}
-            >
-              Properties
-            </Link>
-            <button
-              id="Header_7"
-              onClick={isLoggedIn ? handleLogout : handleLogin}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity duration-300"
-            >
-              {isLoggedIn ? 'Logout' : 'Login'}
-            </button>
+          <div className="flex items-center space-x-4">
+            {!isLoggedIn ? (
+              <div id="Header_5" className="flex space-x-4">
+                <button
+                  className="bg-white text-blue-600 px-6 py-2 rounded-lg transition-all duration-300 hover:bg-blue-100 hover:shadow-lg"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                >
+                  Login
+                </button>
+                <Link
+                  to="/register"
+                  className="bg-transparent border-2 border-white text-white px-6 py-2 rounded-lg transition-all duration-300 hover:bg-white hover:text-blue-600"
+                >
+                  Register
+                </Link>
+              </div>
+            ) : (
+              <div id="Header_6" className="relative">
+                <button
+                  className="flex items-center space-x-2 text-white hover:text-blue-200"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                >
+                  <img
+                    src={images[1]}
+                    alt="Profile"
+                    className="h-8 w-8 rounded-full border-2 border-white"
+                  />
+                  <span>{user?.email}</span>
+                </button>
+                {showDropdown && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2">
+                    <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">Profile</a>
+                    <a href="/settings" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">Settings</a>
+                    <button
+                      onClick={() => {
+                        setIsLoggedIn(false);
+                        setUser(null);
+                        localStorage.removeItem('token');
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            id="Header_8"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-gray-600 focus:outline-none"
-          >
-            <svg className="h-6 w-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              {isMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div id="Header_9" className="md:hidden mt-4 pb-4">
-            <Link
-              to="/home"
-              className="block py-2 text-gray-600 hover:text-blue-500"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/listing"
-              className="block py-2 text-gray-600 hover:text-blue-500"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Listings
-            </Link>
-            <Link
-              to="/propertydetail"
-              className="block py-2 text-gray-600 hover:text-blue-500"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Properties
-            </Link>
-            <button
-              onClick={isLoggedIn ? handleLogout : handleLogin}
-              className="w-full mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity duration-300"
-            >
-              {isLoggedIn ? 'Logout' : 'Login'}
-            </button>
-          </div>
-        )}
       </nav>
     </header>
   );
