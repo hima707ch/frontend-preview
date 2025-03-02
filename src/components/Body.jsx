@@ -5,7 +5,7 @@ import Footer from "./Global/Footer.jsx";
 import HomePage from "./HomePage/Body.jsx";
 import PropertiesPage from "./PropertiesPage/Body.jsx";
 import ProfilePage from "./ProfilePage/Body.jsx";
-import AdminPage from "./AdminPage/Body.jsx";
+// import AdminPage from "./AdminPage/Body.jsx";
 
 const Body = () => {
 return (
@@ -15,7 +15,7 @@ return (
             <Route path="/" element={<HomePage />} />
         <Route path="/propertiespage" element={<PropertiesPage />} />
         <Route path="/profilepage" element={<ProfilePage />} />
-        <Route path="/adminpage" element={<AdminPage />} />
+        {/* <Route path="/adminpage" element={<AdminPage />} /> */}
         </Routes>
       <Footer />
     </Router>
