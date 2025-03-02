@@ -15,7 +15,7 @@ const TestimonialsSlider = () => {
       name: 'Michael Chen',
       role: 'Property Investor',
       image: images[1],
-      quote: 'As a real estate investor, I appreciate their market insights and dedication. They've helped me secure multiple profitable properties.'
+      quote: 'As a real estate investor, I appreciate their market insights and dedication. They ve helped me secure multiple profitable properties.'
     },
     {
       id: 3,

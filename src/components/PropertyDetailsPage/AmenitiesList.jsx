@@ -8,7 +8,7 @@ const amenitiesData = [
   { id: 4, name: 'Parking Space', icon: '🅿️', description: 'Secured underground parking with EV charging' },
   { id: 5, name: 'Security', icon: '🔒', description: '24/7 security with CCTV surveillance' },
   { id: 6, name: 'Garden Area', icon: '🌳', description: 'Landscaped gardens with seating areas' },
-  { id: 7, name: 'Kids Play Area', icon: '🎮', description: 'Safe and monitored children's playground' },
+  { id: 7, name: 'Kids Play Area', icon: '🎮', description: 'Safe and monitored children s playground' },
   { id: 8, name: 'Club House', icon: '🏛️', description: 'Multi-purpose community gathering space' }
 ];
 
