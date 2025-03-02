@@ -1,5 +1,5 @@
 const images = [
-    "https://static.vecteezy.com/system/resources/thumbnails/046/812/114/small/luxury-housing-projects-featuring-modern-townhouses-and-villas-real-estate-market-with-property-listings-photo.jpg",
+    "https://realestate.apleona.com/fileadmin/media/images/ESG_Bild.png",
     "https://prod.rockmedialibrary.com/api/public/content/ff061825fa8e44bf8108de5c786c0062?v=4c4f7c7a",
     "https://psgroup.in/blog/wp-content/uploads/2020/11/banner-1.jpg",
     "https://t4.ftcdn.net/jpg/02/85/83/41/360_F_285834130_nM5F6xl8lh8Mhb00ksNXBS6iBH9bMExz.jpg",
