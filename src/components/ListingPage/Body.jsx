@@ -1,15 +1,17 @@
 import React from "react";
 
-import FilterSidebar from "./FilterSidebar";
-import PropertyCardList from "./PropertyCardList";
-import PaginationControls from "./PaginationControls";
+import PropertyHeroSection from "./PropertyHeroSection";
+import PropertyDetails from "./PropertyDetails";
+import ImageGallery from "./ImageGallery";
+import ContactAgentForm from "./ContactAgentForm";
 
 const Body = () => {
   return (
     <div>
-      <FilterSidebar />
-      <PropertyCardList />
-      <PaginationControls />
+      <PropertyHeroSection />
+      <PropertyDetails />
+      <ImageGallery />
+      <ContactAgentForm />
     </div>
   );
 };

@@ -84,9 +84,9 @@ const Header = () => {
   return (
     <header
       id="Header_1"
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${isSticky ? 'bg-white dark:bg-gray-800 shadow-md' : 'bg-transparent'} ${isDarkMode ? 'dark' : ''}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 mb-8 ${isSticky ? 'bg-white dark:bg-gray-800 shadow-md' : 'bg-transparent'} ${isDarkMode ? 'dark' : ''}`}
     >
-      <div className="container mx-auto px-4 py-6 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-6 flex items-center justify-between mb-4">
         <div className="flex items-center">
           <img src={images[0]} alt="Logo" className="h-10 w-auto mr-4" />
           <span className="text-xl font-bold text-gray-800 dark:text-white">Real Estate</span>
@@ -133,7 +133,7 @@ const Header = () => {
       </div>
 
       {showAuthModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mb-4">
           <div className="bg-white dark:bg-gray-800 p-8 rounded-lg w-96">
             <h2 className="text-2xl font-bold mb-4">{authMode === 'login' ? 'Login' : 'Register'}</h2>
             <form onSubmit={handleAuth}>
@@ -161,12 +161,12 @@ const Header = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mb-4"
               >
                 {authMode === 'login' ? 'Login' : 'Register'}
               </button>
             </form>
-            <p className="mt-4 text-center">
+            <p className="mt-4 text-center mb-4">
               {authMode === 'login' ? "Don't have an account? " : 'Already have an account? '}
               <button
                 className="text-blue-600 hover:text-blue-700"
@@ -186,16 +186,16 @@ const Header = () => {
       )}
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert" id="Header_9">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 mb-4" role="alert" id="Header_9">
           <strong className="font-bold">Error!</strong> {error}
         </div>
       )}
       {properties.length > 0 && (
-        <div className="container mx-auto px-4 py-8" id="Header_10">
+        <div className="container mx-auto px-4 py-8 mb-8" id="Header_10">
           <h2 className="text-2xl font-bold mb-4">Properties</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((property) => (
-              <li key={property.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden" id={`Header_${property.id}`}>
+              <li key={property.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-4" id={`Header_${property.id}`}>
                 <img src={images[property.id % images.length]} alt={property.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{property.title}</h3>
