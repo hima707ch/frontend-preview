@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Global/Header.jsx";
 import Footer from "./Global/Footer.jsx";
 import HomePage from "./HomePage/Body.jsx";
-import ListingPage from "./ListingPage/Body.jsx";
-import PropertyDetailPage from "./PropertyDetailPage/Body.jsx";
+import PropertiesPage from "./PropertiesPage/Body.jsx";
+import ProfilePage from "./ProfilePage/Body.jsx";
+import AdminPage from "./AdminPage/Body.jsx";
 
 const Body = () => {
 return (
@@ -12,8 +13,9 @@ return (
       <Header />
         <Routes>
             <Route path="/" element={<HomePage />} />
-        <Route path="/listingpage" element={<ListingPage />} />
-        <Route path="/propertydetailpage" element={<PropertyDetailPage />} />
+        <Route path="/propertiespage" element={<PropertiesPage />} />
+        <Route path="/profilepage" element={<ProfilePage />} />
+        <Route path="/adminpage" element={<AdminPage />} />
         </Routes>
       <Footer />
     </Router>
