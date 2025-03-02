@@ -2,22 +2,22 @@ import React from "react";
 
 import HeroSection from "./HeroSection";
 import SearchBar from "./SearchBar";
-import FeaturedPropertiesList from "./FeaturedPropertiesList";
-import PropertyCard from "./PropertyCard";
-import IntroductionSection from "./IntroductionSection";
-import NewsletterSignUp from "./NewsletterSignUp";
-import TestimonialsSlider from "./TestimonialsSlider";
+import FeaturedProperties from "./FeaturedProperties";
+import LoginRegisterPrompt from "./LoginRegisterPrompt";
+import ServiceInformationSection from "./ServiceInformationSection";
+import DynamicPropertiesListing from "./DynamicPropertiesListing";
+import UserTestimonials from "./UserTestimonials";
 
 const Body = () => {
   return (
     <div>
       <HeroSection />
       <SearchBar />
-      <FeaturedPropertiesList />
-      <PropertyCard />
-      <IntroductionSection />
-      <NewsletterSignUp />
-      <TestimonialsSlider />
+      <FeaturedProperties />
+      <LoginRegisterPrompt />
+      <ServiceInformationSection />
+      <DynamicPropertiesListing />
+      <UserTestimonials />
     </div>
   );
 };
