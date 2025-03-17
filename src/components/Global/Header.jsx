@@ -1,94 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import images from '../assets/images';
 
 const Header = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    navigate(`/listings?search=${searchQuery}`);
-    setSearchQuery('');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    navigate('/login');
   };
 
   return (
-    <header id="Header_1" className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg fixed w-full top-0 z-50">
-      <div id="Header_2" className="container mx-auto px-4 py-3">
-        <div id="Header_3" className="flex items-center justify-between">
-          <Link to="/home" className="flex items-center">
-            <img id="Header_4" src={images[0]} alt="Logo" className="h-12 w-auto hover:opacity-80 transition-opacity duration-300" />
+    <header id="Header_1" className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+      <nav className="container mx-auto px-4 py-3">
+        <div className="flex justify-between items-center">
+          <Link to="/homepage" className="flex items-center space-x-2">
+            <img id="Header_2" src={images[0]} alt="Logo" className="h-10 w-10 rounded-full hover:opacity-80 transition-opacity" />
+            <span id="Header_3" className="text-white text-2xl font-bold hover:text-gray-200">PropertyHub</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav id="Header_5" className="hidden md:flex items-center space-x-8">
-            <Link to="/home" className="text-white hover:text-blue-200 transition-colors duration-300 font-semibold">Home</Link>
-            <Link to="/listings" className="text-white hover:text-blue-200 transition-colors duration-300 font-semibold">Listings</Link>
-            <Link to="/login" className="text-white hover:text-blue-200 transition-colors duration-300 font-semibold">Login</Link>
-            <Link to="/register" className="bg-white text-blue-600 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors duration-300 font-semibold">Register</Link>
-          </nav>
-
-          {/* Search Bar */}
-          <form id="Header_6" onSubmit={handleSearch} className="hidden md:flex items-center">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search properties..."
-              className="px-4 py-2 rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-300 w-64 transition-all duration-300"
-            />
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-6 py-2 rounded-r-full hover:bg-blue-400 transition-colors duration-300"
-            >
-              Search
-            </button>
-          </form>
+          <div id="Header_4" className="hidden md:flex items-center space-x-6">
+            <Link to="/homepage" className="text-white hover:text-gray-200 transition-colors duration-200">Home</Link>
+            {!isAuthenticated ? (
+              <>
+                <Link to="/register" className="text-white hover:text-gray-200 transition-colors duration-200">Register</Link>
+                <Link to="/login" className="bg-white text-blue-600 px-4 py-2 rounded-full hover:bg-gray-100 transition-colors duration-200">Login</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/dashboard" className="text-white hover:text-gray-200 transition-colors duration-200">Dashboard</Link>
+                <Link to="/addproperty" className="text-white hover:text-gray-200 transition-colors duration-200">Add Property</Link>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-colors duration-200"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
 
           {/* Mobile Menu Button */}
           <button
-            id="Header_7"
+            id="Header_5"
+            className="md:hidden text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white focus:outline-none"
           >
-            <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div id="Header_8" className="md:hidden mt-4 pb-4">
-            <nav className="flex flex-col space-y-4">
-              <Link to="/home" className="text-white hover:text-blue-200 transition-colors duration-300">Home</Link>
-              <Link to="/listings" className="text-white hover:text-blue-200 transition-colors duration-300">Listings</Link>
-              <Link to="/login" className="text-white hover:text-blue-200 transition-colors duration-300">Login</Link>
-              <Link to="/register" className="text-white hover:text-blue-200 transition-colors duration-300">Register</Link>
-              <form onSubmit={handleSearch} className="flex">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search properties..."
-                  className="px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
-                />
+          <div id="Header_6" className="md:hidden mt-4 space-y-4">
+            <Link to="/homepage" className="block text-white hover:text-gray-200 transition-colors duration-200">Home</Link>
+            {!isAuthenticated ? (
+              <>
+                <Link to="/register" className="block text-white hover:text-gray-200 transition-colors duration-200">Register</Link>
+                <Link to="/login" className="block text-white hover:text-gray-200 transition-colors duration-200">Login</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/dashboard" className="block text-white hover:text-gray-200 transition-colors duration-200">Dashboard</Link>
+                <Link to="/addproperty" className="block text-white hover:text-gray-200 transition-colors duration-200">Add Property</Link>
                 <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-400 transition-colors duration-300"
+                  onClick={handleLogout}
+                  className="block w-full text-left text-white hover:text-gray-200 transition-colors duration-200"
                 >
-                  Search
+                  Logout
                 </button>
-              </form>
-            </nav>
+              </>
+            )}
           </div>
         )}
-      </div>
+      </nav>
     </header>
   );
 };
