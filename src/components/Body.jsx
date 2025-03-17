@@ -6,7 +6,7 @@ import Homepage from "./v2/Homepage";
 import Register from "./v2/Register";
 import Login from "./v2/Login";
 import Dashboard from "./v2/Dashboard";
-import AddProperty from "./v2/Add Property";
+import AddProperty from "./v2/AddProperty";
 
 const Body = () => {
 return (
