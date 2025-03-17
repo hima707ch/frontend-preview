@@ -2,7 +2,7 @@
   "name": "preview",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://aisource-a9a6.vercel.app",
+  "proxy": "https://backend-preview-38ao.vercel.app",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
