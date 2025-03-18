@@ -1,1 +1,31 @@
-import React from 'react'; import images from '../assets/images'; const Footer = () => { return (<footer className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-12" id="Footer_1"><div className="container mx-auto px-6" id="Footer_2"><div className="grid grid-cols-1 md:grid-cols-4 gap-8" id="Footer_3"><div className="space-y-4" id="Footer_4"><img src={images[0]} alt="Logo" className="h-12" id="Footer_5" /><p className="text-gray-400" id="Footer_6">Your trusted partner in creating amazing digital experiences.</p><div className="flex space-x-4" id="Footer_7"><a href="#" className="hover:text-blue-400 transition-colors" id="Footer_8"><i className="fab fa-facebook-f"></i></a><a href="#" className="hover:text-blue-400 transition-colors" id="Footer_9"><i className="fab fa-twitter"></i></a><a href="#" className="hover:text-blue-400 transition-colors" id="Footer_10"><i className="fab fa-instagram"></i></a></div></div><div className="space-y-4" id="Footer_11"><h3 className="text-xl font-semibold" id="Footer_12">Quick Links</h3><ul className="space-y-2" id="Footer_13"><li id="Footer_14"><a href="#" className="text-gray-400 hover:text-white transition-colors">Home</a></li><li id="Footer_15"><a href="#" className="text-gray-400 hover:text-white transition-colors">About Us</a></li><li id="Footer_16"><a href="#" className="text-gray-400 hover:text-white transition-colors">Services</a></li><li id="Footer_17"><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li></ul></div><div className="space-y-4" id="Footer_18"><h3 className="text-xl font-semibold" id="Footer_19">Services</h3><ul className="space-y-2" id="Footer_20"><li id="Footer_21"><a href="#" className="text-gray-400 hover:text-white transition-colors">Web Development</a></li><li id="Footer_22"><a href="#" className="text-gray-400 hover:text-white transition-colors">Mobile Apps</a></li><li id="Footer_23"><a href="#" className="text-gray-400 hover:text-white transition-colors">UI/UX Design</a></li><li id="Footer_24"><a href="#" className="text-gray-400 hover:text-white transition-colors">Consulting</a></li></ul></div><div className="space-y-4" id="Footer_25"><h3 className="text-xl font-semibold" id="Footer_26">Contact Us</h3><ul className="space-y-2 text-gray-400" id="Footer_27"><li id="Footer_28"><i className="fas fa-map-marker-alt mr-2"></i>123 Business Street, NY 10001</li><li id="Footer_29"><i className="fas fa-phone mr-2"></i>+1 234 567 8900</li><li id="Footer_30"><i className="fas fa-envelope mr-2"></i>contact@example.com</li></ul></div></div><div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400" id="Footer_31"><p id="Footer_32">&copy; 2024 Your Company. All rights reserved.</p></div></div></footer>)}; export default Footer;
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer id="Footer_1" className="bg-gray-800 text-white py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-xl font-bold mb-4">PropertyHub</h3>
+            <p className="text-gray-400">Find your perfect property with us.</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Contact</h3>
+            <p className="text-gray-400">Email: info@propertyhub.com</p>
+            <p className="text-gray-400">Phone: (555) 123-4567</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-white">Facebook</a>
+              <a href="#" className="text-gray-400 hover:text-white">Twitter</a>
+              <a href="#" className="text-gray-400 hover:text-white">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

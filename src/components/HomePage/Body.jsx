@@ -1,23 +1,19 @@
-import React from "react";
-
-import HeroSection from "./HeroSection";
-import SearchBar from "./SearchBar";
-import FeaturedProperties from "./FeaturedProperties";
-import LoginRegisterPrompt from "./LoginRegisterPrompt";
-import ServiceInformationSection from "./ServiceInformationSection";
-import DynamicPropertiesListing from "./DynamicPropertiesListing";
-import UserTestimonials from "./UserTestimonials";
+import React from 'react';
+import Navbar from './Navbar';
+import Hero from './Hero';
+import FeaturedProperties from './FeaturedProperties';
+import Footer from './Footer';
+import { useHome } from './useHome';
 
 const Body = () => {
+  const { properties, isAuthenticated, handleLogout } = useHome();
+
   return (
-    <div>
-      <HeroSection />
-      <SearchBar />
-      <FeaturedProperties />
-      <LoginRegisterPrompt />
-      <ServiceInformationSection />
-      <DynamicPropertiesListing />
-      <UserTestimonials />
+    <div className="min-h-screen flex flex-col">
+      <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Hero />
+      <FeaturedProperties properties={properties} />
+      <Footer />
     </div>
   );
 };
