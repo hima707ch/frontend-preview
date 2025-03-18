@@ -1,27 +1,24 @@
-import React from "react";
-import PropertySearchBar from "./PropertySearchBar";
-import PropertyList from "./PropertyList";
-import MapView from "./MapView";
-import PropertyDetailsModal from "./PropertyDetailsModal";
-import FilterSidebar from "./FilterSidebar";
-import PropertyComparison from "./PropertyComparison";
-import Footer from "./Footer";
+import React from 'react';
+import PropertyDetails from './PropertyDetails';
+import PropertyGallery from './PropertyGallery';
+import PropertyInfo from './PropertyInfo';
+import ContactForm from './ContactForm';
+import { usePropertyListing } from './usePropertyListing';
 
 const Body = () => {
+  const { property, loading, error } = usePropertyListing();
+
+  if (loading) return <div id="Body_1" className="flex justify-center items-center h-screen">Loading...</div>;
+  if (error) return <div id="Body_2" className="text-red-500 text-center p-4">{error}</div>;
+  if (!property) return <div id="Body_3" className="text-center p-4">Property not found</div>;
+
   return (
-    <main className="flex flex-col w-full min-h-screen bg-gray-100">
-      <PropertySearchBar />
-      <div className="flex flex-row w-full">
-        <FilterSidebar />
-        <div className="flex flex-col flex-grow">
-          <PropertyList />
-          <MapView />
-        </div>
-      </div>
-      <PropertyComparison />
-      <PropertyDetailsModal />
-      <Footer />
-    </main>
+    <div id="Body_4" className="container mx-auto px-4 py-8">
+      <PropertyDetails property={property} />
+      <PropertyGallery images={property.images} />
+      <PropertyInfo property={property} />
+      <ContactForm propertyId={property.id} />
+    </div>
   );
 };
 
