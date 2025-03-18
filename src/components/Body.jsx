@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Global/Header.jsx";
 import Footer from "./Global/Footer.jsx";
-import HomePage from "./v2/HomePage";
-import Login from "./v2/Login";
-import Register from "./v2/Register";
-import AddProperty from "./v2/AddProperty";
-import PropertyList from "./v2/PropertyList";
-import PropertyDetails from "./v2/PropertyDetails";
+import HomePage from "./HomePage/Body.jsx";
+import Login from "./Login/Body.jsx";
+import Register from "./Register/Body.jsx";
+import AddProperty from "./AddProperty/Body.jsx";
+import PropertyList from "./PropertyList/Body.jsx";
+import PropertyDetails from "./PropertyDetails/Body.jsx";
 
 const Body = () => {
 return (

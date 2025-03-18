@@ -1,19 +1,27 @@
 import React from 'react';
-import Navbar from './Navbar';
 import Hero from './Hero';
-import FeaturedProperties from './FeaturedProperties';
-import Footer from './Footer';
-import { useHome } from './useHome';
+import PropertyList from './PropertyList';
+import SearchBar from './SearchBar';
+import useHome from './useHome';
 
 const Body = () => {
-  const { properties, isAuthenticated, handleLogout } = useHome();
+  const { properties, loading, error, searchCriteria, handleSearch } = useHome();
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+    <div className="min-h-screen bg-gray-50" id="Body_1">
       <Hero />
-      <FeaturedProperties properties={properties} />
-      <Footer />
+      <div className="container mx-auto px-4 py-8" id="Body_2">
+        <SearchBar onSearch={handleSearch} searchCriteria={searchCriteria} />
+        {loading ? (
+          <div className="flex justify-center items-center h-64" id="Body_3">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        ) : error ? (
+          <div className="text-red-500 text-center py-4" id="Body_4">{error}</div>
+        ) : (
+          <PropertyList properties={properties} />
+        )}
+      </div>
     </div>
   );
 };

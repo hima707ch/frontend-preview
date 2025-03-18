@@ -1,33 +1,59 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
-export const useHome = () => {
+const useHome = () => {
   const [properties, setProperties] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchCriteria, setSearchCriteria] = useState({
+    type: '',
+    location: '',
+    minPrice: '',
+    maxPrice: ''
+  });
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-    fetchProperties();
-  }, []);
-
-  const fetchProperties = async () => {
+  const fetchProperties = async (criteria) => {
     try {
-      const response = await axios.get('/properties');
-      setProperties(response.data);
-    } catch (error) {
-      console.error('Error fetching properties:', error);
+      setLoading(true);
+      setError(null);
+
+      const queryParams = new URLSearchParams(criteria).toString();
+      const response = await fetch(`/api/properties/list?${queryParams}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch properties');
+      }
+
+      const data = await response.json();
+      setProperties(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
+  const handleSearch = (formData) => {
+    const newCriteria = {
+      type: formData.get('type'),
+      location: formData.get('location'),
+      minPrice: formData.get('minPrice'),
+      maxPrice: formData.get('maxPrice')
+    };
+    setSearchCriteria(newCriteria);
+    fetchProperties(newCriteria);
   };
+
+  useEffect(() => {
+    fetchProperties(searchCriteria);
+  }, []);
 
   return {
     properties,
-    isAuthenticated,
-    handleLogout
+    loading,
+    error,
+    searchCriteria,
+    handleSearch
   };
 };
+
+export default useHome;
