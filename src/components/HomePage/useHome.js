@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
 
-export const useHome = () => {
+export default function useHome() {
   const [properties, setProperties] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+
     const fetchProperties = async () => {
       try {
-        const token = localStorage.getItem('token');
         const response = await fetch('/api/properties/list', {
           headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+            'Authorization': `Bearer ${token}`
+          }
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch properties');
-        }
+        if (!response.ok) throw new Error('Failed to fetch properties');
 
         const data = await response.json();
         setProperties(data);
@@ -32,5 +33,5 @@ export const useHome = () => {
     fetchProperties();
   }, []);
 
-  return { properties, loading, error };
-};
+  return { isLoggedIn, properties, loading, error };
+}

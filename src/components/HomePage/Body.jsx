@@ -1,23 +1,21 @@
 import React from 'react';
 import Hero from './Hero';
 import PropertyList from './PropertyList';
-import Navigation from './Navigation';
+import LoginRegisterLinks from './LoginRegisterLinks';
 import useHome from './useHome';
 
-const Body = () => {
-  const { properties, loading, error, navigateToProperty } = useHome();
+export default function Body() {
+  const { isLoggedIn, properties, loading, error } = useHome();
 
   return (
-    <div className="min-h-screen bg-gray-50" id="Body_1">
-      <Navigation id="Body_2" />
-      <Hero id="Body_3" />
-      <main className="container mx-auto px-4 py-8" id="Body_4">
-        {loading && <div className="text-center">Loading...</div>}
-        {error && <div className="text-red-500 text-center">{error}</div>}
-        <PropertyList properties={properties} onPropertyClick={navigateToProperty} id="Body_5" />
+    <div id="Body_1" className="min-h-screen bg-gray-50">
+      <Hero />
+      {!isLoggedIn && <LoginRegisterLinks />}
+      <main id="Body_2" className="container mx-auto px-4 py-8">
+        {loading && <div id="Body_3" className="text-center">Loading properties...</div>}
+        {error && <div id="Body_4" className="text-red-500 text-center">{error}</div>}
+        {properties && <PropertyList properties={properties} />}
       </main>
     </div>
   );
-};
-
-export default Body;
+}
