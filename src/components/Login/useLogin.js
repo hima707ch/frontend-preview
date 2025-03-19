@@ -1,33 +1,44 @@
 import { useState } from 'react';
-import axios from 'axios';
 
-export const useLogin = () => {
+const useLogin = () => {
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async (credentials) => {
+    setIsLoading(true);
     setError('');
-    setLoading(true);
-
-    const formData = new FormData(e.target);
-    const username = formData.get('username');
-    const password = formData.get('password');
 
     try {
-      const response = await axios.post('/auth/login', {
-        username,
-        password
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials)
       });
 
-      localStorage.setItem('token', response.data.token);
-      window.location.href = '/';
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.role);
+      
+      window.location.href = '/dashboard';
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to login. Please try again.');
+      setError(err.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { handleLogin, error, loading };
+  return {
+    handleLogin,
+    error,
+    isLoading
+  };
 };
+
+export default useLogin;
