@@ -1,30 +1,22 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-export const useRegister = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+const useRegister = () => {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    const formData = new FormData(e.target);
-    const userData = {
-      username: formData.get('username'),
-      password: formData.get('password'),
-      role: formData.get('role')
-    };
+  const handleSubmit = async (formData) => {
+    setIsLoading(true);
+    setError(null);
+    setSuccess(false);
 
     try {
       const response = await fetch('/api/users/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
@@ -33,13 +25,15 @@ export const useRegister = () => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      navigate('/login');
+      setSuccess(true);
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { handleSubmit, error, loading };
+  return { handleSubmit, error, isLoading, success };
 };
+
+export default useRegister;

@@ -1,71 +1,91 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import useRegistrationForm from './useRegistrationForm';
 
-const RegistrationForm = ({ onSubmit, error, loading }) => {
+const RegistrationForm = ({ onSubmit, isLoading }) => {
+  const { formData, handleChange, errors, validateForm } = useRegistrationForm();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      onSubmit(formData);
+    }
+  };
+
   return (
-    <div id="RegistrationForm_1" className="space-y-6">
-      <div>
-        <h2 id="RegistrationForm_2" className="text-3xl font-extrabold text-gray-900 text-center">Create your account</h2>
+    <form id="RegistrationForm_1" onSubmit={handleSubmit} className="space-y-6">
+      <div id="RegistrationForm_2">
+        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+          Username
+        </label>
+        <div className="mt-1">
+          <input
+            id="RegistrationForm_3"
+            name="username"
+            type="text"
+            required
+            value={formData.username}
+            onChange={handleChange}
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+          {errors.username && (
+            <p id="RegistrationForm_4" className="mt-2 text-sm text-red-600">{errors.username}</p>
+          )}
+        </div>
       </div>
-      <form id="RegistrationForm_3" className="mt-8 space-y-6" onSubmit={onSubmit}>
-        <div className="rounded-md shadow-sm space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Enter your username"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Enter your password"
-            />
-          </div>
-          <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
-            <select
-              id="role"
-              name="role"
-              required
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            >
-              <option value="">Select a role</option>
-              <option value="buyer">Buyer</option>
-              <option value="seller">Seller</option>
-            </select>
-          </div>
+
+      <div id="RegistrationForm_5">
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          Password
+        </label>
+        <div className="mt-1">
+          <input
+            id="RegistrationForm_6"
+            name="password"
+            type="password"
+            required
+            value={formData.password}
+            onChange={handleChange}
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+          {errors.password && (
+            <p id="RegistrationForm_7" className="mt-2 text-sm text-red-600">{errors.password}</p>
+          )}
         </div>
+      </div>
 
-        {error && <div id="RegistrationForm_4" className="text-red-500 text-sm text-center">{error}</div>}
-
-        <div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      <div id="RegistrationForm_8">
+        <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+          Role
+        </label>
+        <div className="mt-1">
+          <select
+            id="RegistrationForm_9"
+            name="role"
+            required
+            value={formData.role}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
-            {loading ? 'Registering...' : 'Register'}
-          </button>
+            <option value="">Select a role</option>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
+          {errors.role && (
+            <p id="RegistrationForm_10" className="mt-2 text-sm text-red-600">{errors.role}</p>
+          )}
         </div>
+      </div>
 
-        <div id="RegistrationForm_5" className="text-sm text-center">
-          Already have an account?{' '}
-          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Sign in
-          </Link>
-        </div>
-      </form>
-    </div>
+      <div id="RegistrationForm_11">
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+        >
+          {isLoading ? 'Registering...' : 'Register'}
+        </button>
+      </div>
+    </form>
   );
 };
 
