@@ -1,52 +1,33 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const useAddProperty = () => {
-  const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [formData, setFormData] = useState({
-    title: '',
-    type: '',
-    price: '',
-    bedrooms: '',
-    bathrooms: '',
-    area: '',
-    location: '',
-    description: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleNext = () => {
-    setCurrentStep(prev => Math.min(prev + 1, 4));
-  };
-
-  const handleBack = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 1));
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
+    const formData = new FormData(e.target);
+    const propertyData = {
+      title: formData.get('title'),
+      description: formData.get('description'),
+      location: formData.get('location'),
+      price: Number(formData.get('price'))
+    };
+
     try {
       const token = localStorage.getItem('token');
-      if (!token) throw new Error('Authentication required');
-
       const response = await fetch('/api/properties/add', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(propertyData)
       });
 
       if (!response.ok) {
@@ -54,7 +35,7 @@ export const useAddProperty = () => {
       }
 
       const data = await response.json();
-      // Handle success (e.g., redirect or show success message)
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -63,12 +44,7 @@ export const useAddProperty = () => {
   };
 
   return {
-    formData,
-    currentStep,
-    handleChange,
     handleSubmit,
-    handleNext,
-    handleBack,
     isLoading,
     error
   };
