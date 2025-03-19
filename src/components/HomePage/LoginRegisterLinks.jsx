@@ -21,4 +21,5 @@ export default function LoginRegisterLinks() {
         </Link>
       </div>
     </div>
-  );
+  )
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import RegistrationForm from './RegistrationForm';
 import useRegister from './useRegister';
 
-export const Body = () => {
+const Body = () => {
   const { handleRegister, isLoading, error } = useRegister();
 
   return (
@@ -26,3 +26,5 @@ export const Body = () => {
     </div>
   );
 };
+
+export default Body;

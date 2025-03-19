@@ -3,7 +3,7 @@ import BuyerPanel from './BuyerPanel';
 import SellerPanel from './SellerPanel';
 import { useDashboard } from './useDashboard';
 
-export const Body = () => {
+const Body = () => {
   const { userRole, loading, error } = useDashboard();
 
   if (loading) {
@@ -29,3 +29,5 @@ export const Body = () => {
     </div>
   );
 };
+
+export default Body;
