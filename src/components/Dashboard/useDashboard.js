@@ -2,20 +2,21 @@ import { useState, useEffect } from 'react';
 
 export const useDashboard = () => {
   const [userRole, setUserRole] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      setError('Please login to access the dashboard');
-      setLoading(false);
+      setError('Not authenticated');
+      setIsLoading(false);
       return;
     }
 
-    setUserRole(localStorage.getItem('role'));
-    setLoading(false);
+    const role = localStorage.getItem('role');
+    setUserRole(role);
+    setIsLoading(false);
   }, []);
 
-  return { userRole, loading, error };
+  return { userRole, isLoading, error };
 };
