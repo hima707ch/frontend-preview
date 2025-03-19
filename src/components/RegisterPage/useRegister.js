@@ -1,12 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const useRegister = () => {
+export const useRegister = () => {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleRegister = async (userData) => {
+  const handleRegister = async (formData) => {
     setIsLoading(true);
-    setError(null);
+    setError('');
+    setSuccess('');
 
     try {
       const response = await fetch('/api/users/register', {
@@ -14,7 +18,7 @@ const useRegister = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
@@ -23,8 +27,10 @@ const useRegister = () => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      // Handle successful registration
-      window.location.href = '/login';
+      setSuccess('Registration successful! Redirecting to login...');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -34,9 +40,8 @@ const useRegister = () => {
 
   return {
     handleRegister,
-    isLoading,
     error,
+    success,
+    isLoading,
   };
 };
-
-export default useRegister;
