@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 export const useSellerPanel = () => {
   const [properties, setProperties] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProperties();
@@ -10,73 +10,43 @@ export const useSellerPanel = () => {
 
   const fetchProperties = async () => {
     try {
-      const token = localStorage.getItem('token');
       const response = await fetch('/api/properties/list', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
       });
       const data = await response.json();
       setProperties(data);
     } catch (error) {
       console.error('Error fetching properties:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleAddProperty = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      const formData = new FormData(e.target);
-      const propertyData = {
-        title: formData.get('title'),
-        description: formData.get('description'),
-        price: Number(formData.get('price')),
-        location: formData.get('location')
-      };
-
-      await fetch('/api/properties/add', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(propertyData)
-      });
-
-      setShowAddForm(false);
-      fetchProperties();
-    } catch (error) {
-      console.error('Error adding property:', error);
+  const deleteProperty = async (propertyId) => {
+    if (!window.confirm('Are you sure you want to delete this property?')) {
+      return;
     }
-  };
 
-  const handleEditProperty = async (id) => {
-    // Implementation for editing property
-  };
-
-  const handleDeleteProperty = async (id) => {
     try {
-      const token = localStorage.getItem('token');
-      await fetch(`/api/properties/delete/${id}`, {
+      const response = await fetch(`/api/properties/delete/${propertyId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
       });
 
-      fetchProperties();
+      if (response.ok) {
+        setProperties(properties.filter(p => p.id !== propertyId));
+      } else {
+        throw new Error('Failed to delete property');
+      }
     } catch (error) {
       console.error('Error deleting property:', error);
+      alert('Failed to delete property');
     }
   };
 
-  return {
-    properties,
-    handleAddProperty,
-    handleEditProperty,
-    handleDeleteProperty,
-    showAddForm,
-    setShowAddForm
-  };
-}
+  return { properties, deleteProperty, loading };
+};
