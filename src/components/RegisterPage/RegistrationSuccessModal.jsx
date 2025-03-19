@@ -1,1 +1,0 @@
-import React from 'react'; export const RegistrationSuccessModal = () => { return (<div id="RegistrationSuccessModal_1"><h2 id="RegistrationSuccessModal_2">Success!</h2><button id="RegistrationSuccessModal_3">Close</button></div>)}

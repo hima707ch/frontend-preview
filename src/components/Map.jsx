@@ -1,1 +1,0 @@
-import React from 'react'; export const Map = () => { return (<section className='py-12 px-6' id='50'><div className='max-w-6xl mx-auto' id='51'><h2 className='text-3xl font-semibold mb-8' id='52'>Property Locations</h2><div className='w-full h-96 bg-gray-200 rounded-md overflow-hidden' id='53'>{/* Add interactive map integration here */}</div></div></section>); }

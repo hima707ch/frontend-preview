@@ -1,1 +1,0 @@
-import React from "react"; export const SignUpForm = () => { return (<form id="SignUpForm_1"><input id="SignUpForm_2" type="text" placeholder="Username" /><button id="SignUpForm_3">Sign Up</button></form>); };

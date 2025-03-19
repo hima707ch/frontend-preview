@@ -1,1 +1,0 @@
-import React from 'react'; export const BlogHighlights = () => { return (<div id="BlogHighlights_1"><h2 id="BlogHighlights_2">Recent Posts</h2><ul id="BlogHighlights_3"><li>Post 1</li><li>Post 2</li></ul></div>)}

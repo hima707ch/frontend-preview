@@ -1,1 +1,0 @@
-import React from "react"; export const FeaturedProducts = () => { return (<div id="FeaturedProducts_1"><h2 id="FeaturedProducts_2">Featured Items</h2><ul id="FeaturedProducts_3"><li id="FeaturedProducts_4">Product 1</li><li id="FeaturedProducts_5">Product 2</li></ul></div>)}

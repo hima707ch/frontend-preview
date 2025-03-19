@@ -1,1 +1,0 @@
-export const Pagination = ({ currentPage, totalPages }) => { return (<div><button id="Pagination_1" onClick={() => {}}>Previous</button><span id="Pagination_2">{currentPage}</span><button id="Pagination_3" onClick={() => {}}>Next</button></div>)}
