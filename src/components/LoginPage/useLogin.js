@@ -1,19 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const useLogin = () => {
-  const [loading, setLoading] = useState(false);
+export default function useLogin() {
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleLogin = async (credentials) => {
+    setIsLoading(true);
     setError(null);
-
-    const formData = new FormData(e.target);
-    const username = formData.get('username');
-    const password = formData.get('password');
 
     try {
       const response = await fetch('/api/users/login', {
@@ -21,7 +14,7 @@ const useLogin = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(credentials),
       });
 
       const data = await response.json();
@@ -32,16 +25,14 @@ const useLogin = () => {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
-
-      navigate(data.role === 'seller' ? '/seller-dashboard' : '/properties');
+      
+      window.location.href = data.role === 'seller' ? '/seller-dashboard' : '/buyer-dashboard';
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { handleLogin, loading, error };
-};
-
-export default useLogin;
+  return { handleLogin, error, isLoading };
+}
