@@ -1,23 +1,21 @@
-import React from "react";
-
-import SearchBar from "./SearchBar";
-import FeaturedPropertiesCarousel from "./FeaturedPropertiesCarousel";
-import PropertyTeaserCards from "./PropertyTeaserCards";
-import QuickLinks from "./QuickLinks";
-import MapDisplay from "./MapDisplay";
-import PropertiesFilter from "./PropertiesFilter";
-import PropertyDetailsModal from "./PropertyDetailsModal";
+import React from 'react';
+import PropertyList from './PropertyList';
+import SearchBar from './SearchBar';
+import useHome from './useHome';
 
 const Body = () => {
+  const { properties, loading, error, searchTerm, handleSearch } = useHome();
+
   return (
-    <div>
-      <SearchBar />
-      <FeaturedPropertiesCarousel />
-      <PropertyTeaserCards />
-      <QuickLinks />
-      <MapDisplay />
-      <PropertiesFilter />
-      <PropertyDetailsModal />
+    <div id="Body_1" className="container mx-auto px-4 py-8">
+      <h1 id="Body_2" className="text-4xl font-bold text-gray-800 mb-8 text-center">Find Your Dream Property</h1>
+      <SearchBar id="Body_3" onSearch={handleSearch} />
+      {error && <div id="Body_4" className="text-red-500 text-center my-4">{error}</div>}
+      {loading ? (
+        <div id="Body_5" className="text-center my-8">Loading properties...</div>
+      ) : (
+        <PropertyList id="Body_6" properties={properties} searchTerm={searchTerm} />
+      )}
     </div>
   );
 };
