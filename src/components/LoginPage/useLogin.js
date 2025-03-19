@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function useLogin() {
-  const [error, setError] = useState(null);
+const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = async (credentials) => {
     setIsLoading(true);
@@ -14,7 +16,7 @@ export default function useLogin() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify(credentials)
       });
 
       const data = await response.json();
@@ -25,8 +27,8 @@ export default function useLogin() {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
-      
-      window.location.href = data.role === 'seller' ? '/seller-dashboard' : '/buyer-dashboard';
+
+      navigate(data.role === 'seller' ? '/dashboard' : '/home');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -34,5 +36,7 @@ export default function useLogin() {
     }
   };
 
-  return { handleLogin, error, isLoading };
-}
+  return { handleLogin, isLoading, error };
+};
+
+export default useLogin;
