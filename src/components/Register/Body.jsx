@@ -1,22 +1,23 @@
 import React from 'react';
-import RegisterForm from './RegisterForm';
-import RegisterHero from './RegisterHero';
-import { useRegister } from './useRegister';
+import RegistrationForm from './RegistrationForm';
+import useRegister from './useRegister';
 
 const Body = () => {
-  const { handleSubmit, loading, error, success } = useRegister();
+  const { handleRegister, error, success, isLoading } = useRegister();
 
   return (
-    <div className="min-h-screen bg-gray-100" id="Body_1">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <RegisterHero />
-        <RegisterForm
-          onSubmit={handleSubmit}
-          loading={loading}
-          error={error}
-          success={success}
-        />
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8" id="Body_1">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md" id="Body_2">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900" id="Body_3">
+          Create your account
+        </h2>
       </div>
+      <RegistrationForm 
+        onRegister={handleRegister}
+        error={error}
+        success={success}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

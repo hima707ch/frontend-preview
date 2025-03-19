@@ -1,32 +1,22 @@
 import { useState } from 'react';
 
-export const useRegister = () => {
-  const [loading, setLoading] = useState(false);
+const useRegister = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-    const confirmPassword = e.target.confirmPassword.value;
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    setLoading(true);
+  const handleRegister = async (formData) => {
+    setIsLoading(true);
     setError('');
     setSuccess('');
 
     try {
-      const response = await fetch('/auth/register', {
+      const response = await fetch('/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();
@@ -36,13 +26,19 @@ export const useRegister = () => {
       }
 
       setSuccess('Registration successful! You can now login.');
-      e.target.reset();
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { handleSubmit, loading, error, success };
+  return {
+    handleRegister,
+    error,
+    success,
+    isLoading
+  };
 };
+
+export default useRegister;
