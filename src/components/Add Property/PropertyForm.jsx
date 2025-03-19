@@ -3,72 +3,69 @@ import React from 'react';
 const PropertyForm = ({ onSubmit, isLoading }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    onSubmit({
-      title: formData.get('title'),
-      description: formData.get('description'),
-      price: parseFloat(formData.get('price')),
-      location: formData.get('location')
-    });
+    const formData = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      price: parseFloat(e.target.price.value),
+      location: e.target.location.value
+    };
+    onSubmit(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-6" id="PropertyForm_1">
-      <div className="rounded-md shadow-sm -space-y-px" id="PropertyForm_2">
-        <div id="PropertyForm_3">
-          <label htmlFor="title" className="sr-only">Property Title</label>
-          <input
-            id="PropertyForm_4"
-            name="title"
-            type="text"
-            required
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Property Title"
-          />
-        </div>
-        <div id="PropertyForm_5">
-          <label htmlFor="description" className="sr-only">Description</label>
-          <textarea
-            id="PropertyForm_6"
-            name="description"
-            required
-            rows="4"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Property Description"
-          />
-        </div>
-        <div id="PropertyForm_7">
-          <label htmlFor="price" className="sr-only">Price</label>
-          <input
-            id="PropertyForm_8"
-            name="price"
-            type="number"
-            required
-            min="0"
-            step="0.01"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Price"
-          />
-        </div>
-        <div id="PropertyForm_9">
-          <label htmlFor="location" className="sr-only">Location</label>
-          <input
-            id="PropertyForm_10"
-            name="location"
-            type="text"
-            required
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Location"
-          />
-        </div>
+    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="PropertyForm_1">
+      <div className="mb-4" id="PropertyForm_2">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title" id="PropertyForm_3">Title</label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="PropertyForm_4"
+          type="text"
+          name="title"
+          placeholder="Property Title"
+          required
+        />
       </div>
-
-      <div id="PropertyForm_11">
+      <div className="mb-4" id="PropertyForm_5">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description" id="PropertyForm_6">Description</label>
+        <textarea
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="PropertyForm_7"
+          name="description"
+          rows="4"
+          placeholder="Property Description"
+          required
+        ></textarea>
+      </div>
+      <div className="mb-4" id="PropertyForm_8">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price" id="PropertyForm_9">Price</label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="PropertyForm_10"
+          type="number"
+          name="price"
+          placeholder="Property Price"
+          required
+          min="0"
+          step="0.01"
+        />
+      </div>
+      <div className="mb-6" id="PropertyForm_11">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location" id="PropertyForm_12">Location</label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="PropertyForm_13"
+          type="text"
+          name="location"
+          placeholder="Property Location"
+          required
+        />
+      </div>
+      <div className="flex items-center justify-end" id="PropertyForm_14">
         <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
           type="submit"
           disabled={isLoading}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400"
-          id="PropertyForm_12"
+          id="PropertyForm_15"
         >
           {isLoading ? 'Adding Property...' : 'Add Property'}
         </button>

@@ -1,21 +1,19 @@
 import React from 'react';
 import PropertyForm from './PropertyForm';
-import usePropertyAdd from './usePropertyAdd';
+import Header from './Header';
+import { useAddProperty } from './useAddProperty';
 
 const Body = () => {
-  const { handleSubmit, isLoading, error, success } = usePropertyAdd();
+  const { handleSubmit, isLoading, error } = useAddProperty();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" id="Body_1">
-      <div className="max-w-md w-full mx-auto space-y-8" id="Body_2">
-        <div id="Body_3">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Add New Property</h2>
-          <p className="mt-2 text-center text-sm text-gray-600">List your property for potential buyers</p>
-        </div>
+    <div className="min-h-screen bg-gray-100" id="Body_1">
+      <Header />
+      <main className="container mx-auto px-4 py-8" id="Body_2">
+        <h1 className="text-3xl font-bold text-gray-800 mb-8" id="Body_3">Add New Property</h1>
+        {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" id="Body_4">{error}</div>}
         <PropertyForm onSubmit={handleSubmit} isLoading={isLoading} />
-        {error && <div className="text-red-600 text-center mt-2" id="Body_4">{error}</div>}
-        {success && <div className="text-green-600 text-center mt-2" id="Body_5">{success}</div>}
-      </div>
+      </main>
     </div>
   );
 };
