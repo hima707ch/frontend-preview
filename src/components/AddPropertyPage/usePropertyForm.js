@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const usePropertyForm = (onSubmit) => {
+export default function usePropertyForm(onSubmit) {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -12,11 +12,22 @@ export const usePropertyForm = (onSubmit) => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.title.trim()) newErrors.title = 'Title is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
-    if (!formData.price || formData.price <= 0) newErrors.price = 'Valid price is required';
-    if (!formData.location.trim()) newErrors.location = 'Location is required';
-    return newErrors;
+    
+    if (!formData.title.trim()) {
+      newErrors.title = 'Title is required';
+    }
+    if (!formData.description.trim()) {
+      newErrors.description = 'Description is required';
+    }
+    if (!formData.price || formData.price <= 0) {
+      newErrors.price = 'Valid price is required';
+    }
+    if (!formData.location.trim()) {
+      newErrors.location = 'Location is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
@@ -29,18 +40,17 @@ export const usePropertyForm = (onSubmit) => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length === 0) {
+    
+    if (validateForm()) {
       await onSubmit(formData);
-    } else {
-      setErrors(newErrors);
+      setFormData({
+        title: '',
+        description: '',
+        price: '',
+        location: ''
+      });
     }
   };
 
-  return {
-    formData,
-    handleChange,
-    handleSubmitForm,
-    errors
-  };
-};
+  return { formData, handleChange, handleSubmitForm, errors };
+}

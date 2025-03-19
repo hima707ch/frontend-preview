@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useAddProperty = () => {
+export default function useAddProperty() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,7 +20,8 @@ export const useAddProperty = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add property');
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to add property');
       }
 
       const data = await response.json();
@@ -32,9 +33,5 @@ export const useAddProperty = () => {
     }
   };
 
-  return {
-    handleSubmit,
-    isLoading,
-    error
-  };
-};
+  return { isLoading, error, handleSubmit };
+}
