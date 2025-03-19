@@ -1,156 +1,177 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaHome, FaSignInAlt, FaUserPlus, FaTachometerAlt, FaBuilding } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import images from '../assets/images';
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userRole, setUserRole] = useState('seller'); // Example role, should come from auth context
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSeller, setIsSeller] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Check authentication status from local storage or context
+    const authStatus = localStorage.getItem('isAuthenticated');
+    const userRole = localStorage.getItem('userRole');
+    setIsAuthenticated(authStatus === 'true');
+    setIsSeller(userRole === 'seller');
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userRole');
+    setIsAuthenticated(false);
+    setIsSeller(false);
+    navigate('/homepage');
+  };
+
   return (
-    <header
-      id="Header_1"
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}
-    >
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link
-            to="/homepage"
-            id="Header_2"
-            className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-purple-600 hover:to-blue-600 transition-all duration-300"
-          >
-            PropertyHub
+    <header id="Header_1" className="bg-gradient-to-r from-blue-600 to-purple-600 fixed w-full top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <Link to="/homepage" className="flex-shrink-0" id="Header_2">
+            <img
+              className="h-12 w-auto hover:opacity-80 transition-opacity duration-300"
+              src={images[0]}
+              alt="Logo"
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex space-x-8" id="Header_3">
             <Link
               to="/homepage"
-              id="Header_3"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
+              className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
             >
-              <FaHome className="text-xl" />
-              <span>Home</span>
+              Home
             </Link>
-
-            <Link
-              to="/loginpage"
-              id="Header_4"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-            >
-              <FaSignInAlt className="text-xl" />
-              <span>Login</span>
-            </Link>
-
-            <Link
-              to="/registerpage"
-              id="Header_5"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-            >
-              <FaUserPlus className="text-xl" />
-              <span>Register</span>
-            </Link>
-
-            <Link
-              to="/dashboard"
-              id="Header_6"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-            >
-              <FaTachometerAlt className="text-xl" />
-              <span>Dashboard</span>
-            </Link>
-
-            {userRole === 'seller' && (
-              <Link
-                to="/addpropertypage"
-                id="Header_7"
-                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300"
-              >
-                <FaBuilding className="text-xl" />
-                <span>Add Property</span>
-              </Link>
+            {!isAuthenticated && (
+              <>
+                <Link
+                  to="/loginpage"
+                  className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/registerpage"
+                  className="bg-white text-blue-600 hover:bg-blue-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+                >
+                  Register
+                </Link>
+              </>
             )}
-          </div>
+            {isAuthenticated && (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+                >
+                  Dashboard
+                </Link>
+                {isSeller && (
+                  <Link
+                    to="/addpropertypage"
+                    className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+                  >
+                    Add Property
+                  </Link>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white hover:bg-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            id="Header_8"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-gray-700 hover:text-blue-600 transition-all duration-300"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center" id="Header_4">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-blue-200 hover:bg-blue-700 focus:outline-none"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div
-            id="Header_9"
-            className="md:hidden mt-4 bg-white rounded-lg shadow-lg p-4 space-y-4"
-          >
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden" id="Header_5">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-blue-700">
             <Link
               to="/homepage"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
             >
-              <FaHome className="text-xl" />
-              <span>Home</span>
+              Home
             </Link>
-
-            <Link
-              to="/loginpage"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <FaSignInAlt className="text-xl" />
-              <span>Login</span>
-            </Link>
-
-            <Link
-              to="/registerpage"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <FaUserPlus className="text-xl" />
-              <span>Register</span>
-            </Link>
-
-            <Link
-              to="/dashboard"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-all duration-300"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <FaTachometerAlt className="text-xl" />
-              <span>Dashboard</span>
-            </Link>
-
-            {userRole === 'seller' && (
-              <Link
-                to="/addpropertypage"
-                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <FaBuilding className="text-xl" />
-                <span>Add Property</span>
-              </Link>
+            {!isAuthenticated && (
+              <>
+                <Link
+                  to="/loginpage"
+                  className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/registerpage"
+                  className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Dashboard
+                </Link>
+                {isSeller && (
+                  <Link
+                    to="/addpropertypage"
+                    className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Add Property
+                  </Link>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="text-white hover:bg-red-600 block w-full text-left px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Logout
+                </button>
+              </>
             )}
           </div>
-        )}
-      </nav>
+        </div>
+      )}
     </header>
   );
 };
