@@ -1,25 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const useLogin = () => {
-  const [error, setError] = useState('');
+const useLogin = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    const formData = new FormData(e.target);
-    const email = formData.get('email');
-    const password = formData.get('password');
-
+  const handleLogin = async (credentials) => {
     try {
+      setLoading(true);
+      setError(null);
+
       const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(credentials),
       });
 
       const data = await response.json();
@@ -29,19 +26,16 @@ export const useLogin = () => {
       }
 
       localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', data.userId);
       localStorage.setItem('role', data.role);
-
-      // Redirect based on role
-      if (data.role === 'admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/dashboard');
-      }
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { handleLogin, error };
+  return { handleLogin, loading, error };
 };
+
+export default useLogin;
