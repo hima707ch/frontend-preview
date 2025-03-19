@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-const useRegister = () => {
+export const useRegister = () => {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleRegister = async (formData) => {
-    setIsLoading(true);
+  const handleRegister = async (userData) => {
+    setLoading(true);
     setError('');
     setSuccess('');
 
@@ -16,7 +16,7 @@ const useRegister = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(userData)
       });
 
       const data = await response.json();
@@ -25,20 +25,18 @@ const useRegister = () => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      setSuccess('Registration successful! You can now login.');
+      setSuccess(data.message || 'Registration successful!');
     } catch (err) {
       setError(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return {
     handleRegister,
+    loading,
     error,
-    success,
-    isLoading
+    success
   };
 };
-
-export default useRegister;
