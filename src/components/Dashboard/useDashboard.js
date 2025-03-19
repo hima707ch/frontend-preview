@@ -1,22 +1,16 @@
 import { useState, useEffect } from 'react';
 
-export const useDashboard = () => {
-  const [userRole, setUserRole] = useState(null);
+const useDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setError('Not authenticated');
+    // Simulate initial loading
+    setTimeout(() => {
       setIsLoading(false);
-      return;
-    }
-
-    const role = localStorage.getItem('role');
-    setUserRole(role);
-    setIsLoading(false);
+    }, 1000);
   }, []);
 
-  return { userRole, isLoading, error };
+  return { isLoading };
 };
+
+export default useDashboard;
