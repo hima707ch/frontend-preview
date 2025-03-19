@@ -4,7 +4,7 @@ export const useAddProperty = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (propertyData) => {
+  const handleSubmit = async (formData) => {
     setIsLoading(true);
     setError(null);
 
@@ -16,7 +16,7 @@ export const useAddProperty = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(propertyData)
+        body: JSON.stringify(formData)
       });
 
       if (!response.ok) {
@@ -32,5 +32,9 @@ export const useAddProperty = () => {
     }
   };
 
-  return { handleSubmit, isLoading, error };
+  return {
+    handleSubmit,
+    isLoading,
+    error
+  };
 };
