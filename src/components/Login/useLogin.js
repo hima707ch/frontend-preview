@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-const useLogin = () => {
-  const [error, setError] = useState('');
+export const useLogin = () => {
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (credentials) => {
     setIsLoading(true);
-    setError('');
+    setError(null);
 
     try {
       const response = await fetch('/api/users/login', {
@@ -25,8 +25,8 @@ const useLogin = () => {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
-      
-      window.location.href = '/dashboard';
+
+      window.location.href = data.role === 'seller' ? '/seller-dashboard' : '/buyer-dashboard';
     } catch (err) {
       setError(err.message);
     } finally {
@@ -34,11 +34,5 @@ const useLogin = () => {
     }
   };
 
-  return {
-    handleLogin,
-    error,
-    isLoading
-  };
+  return { handleLogin, error, isLoading };
 };
-
-export default useLogin;
