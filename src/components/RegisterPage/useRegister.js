@@ -1,14 +1,12 @@
 import { useState } from 'react';
 
 const useRegister = () => {
-  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = async (formData) => {
+  const handleRegister = async (userData) => {
     setIsLoading(true);
     setError(null);
-    setSuccess(false);
 
     try {
       const response = await fetch('/api/users/register', {
@@ -16,7 +14,7 @@ const useRegister = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(userData),
       });
 
       const data = await response.json();
@@ -25,7 +23,8 @@ const useRegister = () => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      setSuccess(true);
+      // Handle successful registration
+      window.location.href = '/login';
     } catch (err) {
       setError(err.message);
     } finally {
@@ -33,7 +32,11 @@ const useRegister = () => {
     }
   };
 
-  return { handleSubmit, error, isLoading, success };
+  return {
+    handleRegister,
+    isLoading,
+    error,
+  };
 };
 
 export default useRegister;
