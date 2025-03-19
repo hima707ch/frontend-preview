@@ -6,17 +6,22 @@ const useLogin = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = async (credentials) => {
-    try {
-      setLoading(true);
-      setError(null);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
+    const formData = new FormData(e.target);
+    const username = formData.get('username');
+    const password = formData.get('password');
+
+    try {
       const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
@@ -27,7 +32,8 @@ const useLogin = () => {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
-      navigate('/dashboard');
+
+      navigate(data.role === 'seller' ? '/seller-dashboard' : '/properties');
     } catch (err) {
       setError(err.message);
     } finally {
