@@ -1,58 +1,48 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useHome = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchCriteria, setSearchCriteria] = useState({
-    type: '',
-    location: '',
-    minPrice: '',
-    maxPrice: ''
-  });
+  const navigate = useNavigate();
 
-  const fetchProperties = async (criteria) => {
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
     try {
-      setLoading(true);
-      setError(null);
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/properties/list', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
 
-      const queryParams = new URLSearchParams(criteria).toString();
-      const response = await fetch(`/api/properties/list?${queryParams}`);
-      
       if (!response.ok) {
         throw new Error('Failed to fetch properties');
       }
 
       const data = await response.json();
       setProperties(data);
+      setLoading(false);
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   };
 
-  const handleSearch = (formData) => {
-    const newCriteria = {
-      type: formData.get('type'),
-      location: formData.get('location'),
-      minPrice: formData.get('minPrice'),
-      maxPrice: formData.get('maxPrice')
-    };
-    setSearchCriteria(newCriteria);
-    fetchProperties(newCriteria);
+  const navigateToProperty = (propertyId) => {
+    navigate(`/property/${propertyId}`);
   };
-
-  useEffect(() => {
-    fetchProperties(searchCriteria);
-  }, []);
 
   return {
     properties,
     loading,
     error,
-    searchCriteria,
-    handleSearch
+    navigateToProperty
   };
 };
 
