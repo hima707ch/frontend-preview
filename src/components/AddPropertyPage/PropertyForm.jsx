@@ -1,82 +1,71 @@
 import React from 'react';
-import { useDropzone } from 'react-dropzone';
+import { usePropertyForm } from './usePropertyForm';
 
 const PropertyForm = ({ onSubmit, isLoading }) => {
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {'image/*': []},
-    maxFiles: 5
-  });
+  const { formData, handleChange, handleSubmitForm, errors } = usePropertyForm(onSubmit);
 
   return (
-    <form onSubmit={onSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="PropertyForm_1">
-      <div className="mb-4" id="PropertyForm_2">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">Title</label>
+    <form onSubmit={handleSubmitForm} className="space-y-6 bg-white p-8 rounded-lg shadow" id="PropertyForm_1">
+      <div id="PropertyForm_2">
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
           id="PropertyForm_3"
-          type="text"
           name="title"
-          placeholder="Property Title"
-          required
+          value={formData.title}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        {errors.title && <p className="mt-1 text-sm text-red-600" id="PropertyForm_4">{errors.title}</p>}
       </div>
 
-      <div className="mb-4" id="PropertyForm_4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">Description</label>
+      <div id="PropertyForm_5">
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
         <textarea
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32"
-          id="PropertyForm_5"
+          id="PropertyForm_6"
           name="description"
-          placeholder="Property Description"
-          required
+          rows="4"
+          value={formData.description}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        {errors.description && <p className="mt-1 text-sm text-red-600" id="PropertyForm_7">{errors.description}</p>}
       </div>
 
-      <div className="mb-4" id="PropertyForm_6">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">Location</label>
+      <div id="PropertyForm_8">
+        <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="PropertyForm_7"
-          type="text"
-          name="location"
-          placeholder="Property Location"
-          required
-        />
-      </div>
-
-      <div className="mb-6" id="PropertyForm_8">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">Price</label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="PropertyForm_9"
           type="number"
+          id="PropertyForm_9"
           name="price"
-          placeholder="Property Price"
-          required
+          value={formData.price}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        {errors.price && <p className="mt-1 text-sm text-red-600" id="PropertyForm_10">{errors.price}</p>}
       </div>
 
-      <div className="mb-6" id="PropertyForm_10">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Images</label>
-        <div {...getRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400">
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          )}
-        </div>
+      <div id="PropertyForm_11">
+        <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
+        <input
+          type="text"
+          id="PropertyForm_12"
+          name="location"
+          value={formData.location}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        {errors.location && <p className="mt-1 text-sm text-red-600" id="PropertyForm_13">{errors.location}</p>}
       </div>
 
-      <div className="flex items-center justify-between" id="PropertyForm_11">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Adding Property...' : 'Add Property'}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400"
+        id="PropertyForm_14"
+      >
+        {isLoading ? 'Adding Property...' : 'Add Property'}
+      </button>
     </form>
   );
 };
