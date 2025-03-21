@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 
 
@@ -99,8 +99,19 @@ const Testimonials = ({
             };
         }
       };
+
+      const autoScrollInterval = 4000;
+
     
       const [activeIndex, setActiveIndex] = useState(0);
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+        }, autoScrollInterval);
+        
+        return () => clearInterval(interval);
+      }, [testimonials.length, autoScrollInterval]);
 
       const styles = getVariantStyles();
 

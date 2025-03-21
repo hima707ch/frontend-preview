@@ -6,13 +6,15 @@ import Hero from './Hero';
 import About from './About';
 import Testimonials from './Testimonials';
 
+import TestimonialsData from './data';
+
 const Body = () => {
   const { properties, loading, error, searchCriteria, handleSearchChange } = useHome();
 
   return (
     <>
       <Hero />
-      <About /><Testimonials/>
+      <About /><Testimonials {...TestimonialsData} />
     <div id="Body_1" className="container mx-auto px-4 py-8">
       <h1 id="Body_2" className="text-4xl font-bold text-gray-800 mb-8">Find Your Dream Property</h1>
       <Search id="Body_3" searchCriteria={searchCriteria} onSearchChange={handleSearchChange} />
