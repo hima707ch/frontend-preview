@@ -4,62 +4,50 @@ const FeaturedProducts = () => {
   const products = [
     {
       id: 1,
-      name: 'Premium Wireless Headphones',
-      price: '$299.99',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
-      category: 'Electronics'
+      name: 'Premium Analytics Dashboard',
+      price: '$99.99',
+      description: 'Advanced analytics solution with real-time monitoring',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3'
     },
     {
       id: 2,
-      name: 'Smart Fitness Watch',
-      price: '$199.99',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
-      category: 'Wearables'
+      name: 'Data Visualization Tool',
+      price: '$79.99',
+      description: 'Interactive charts and graphs for better insights',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3'
     },
     {
       id: 3,
-      name: 'Designer Leather Bag',
-      price: '$399.99',
-      image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa',
-      category: 'Fashion'
-    },
-    {
-      id: 4,
-      name: 'Luxury Sunglasses',
-      price: '$159.99',
-      image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f',
-      category: 'Accessories'
+      name: 'Report Generator Pro',
+      price: '$149.99',
+      description: 'Automated report generation with custom templates',
+      image: 'https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-4.0.3'
     }
   ];
 
   return (
-    <div id="FeaturedProducts_1" className="bg-gradient-to-b from-gray-50 to-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="FeaturedProducts_2" className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Featured Products</h2>
-          <p className="mt-4 text-lg text-gray-500">Discover our handpicked selection of premium items</p>
-        </div>
-        
-        <div id="FeaturedProducts_3" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div id="FeaturedProducts_1" className="bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div id="FeaturedProducts_2" className="max-w-7xl mx-auto">
+        <h2 id="FeaturedProducts_3" className="text-3xl font-bold text-gray-900 text-center mb-12">Featured Products</h2>
+        <div id="FeaturedProducts_4" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
-            <div key={product.id} id="FeaturedProducts_4" className="group relative bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out">
-              <div className="aspect-w-3 aspect-h-4 bg-gray-200 group-hover:opacity-75 transition-opacity duration-300">
+            <div key={product.id} id="FeaturedProducts_5" className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl">
+              <div id="FeaturedProducts_6" className="relative h-48">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-6">
-                <span id="FeaturedProducts_5" className="text-sm font-medium text-indigo-600">{product.category}</span>
-                <h3 className="mt-2 text-lg font-medium text-gray-900">{product.name}</h3>
-                <p className="mt-2 text-xl font-semibold text-gray-900">{product.price}</p>
-                <button
-                  id="FeaturedProducts_6"
-                  className="mt-4 w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Add to Cart
-                </button>
+              <div id="FeaturedProducts_7" className="p-6">
+                <h3 id="FeaturedProducts_8" className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
+                <p id="FeaturedProducts_9" className="text-gray-600 mb-4">{product.description}</p>
+                <div id="FeaturedProducts_10" className="flex items-center justify-between">
+                  <span id="FeaturedProducts_11" className="text-2xl font-bold text-indigo-600">{product.price}</span>
+                  <button id="FeaturedProducts_12" className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200">
+                    View Details
+                  </button>
+                </div>
               </div>
             </div>
           ))}
