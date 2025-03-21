@@ -6,56 +6,63 @@ const About = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      once: true
+      once: true,
     });
   }, []);
 
   return (
-    <div id="About_1" className="bg-gradient-to-b from 'gray-50 to-white py-16 px-4 sm:px-6 lg:px-8">
+    <div id="About_1" className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12" data-aos="fade-up">
-          <h2 id="About_2" className="text-4xl font-extrabold text-gray-900 mb-4">About Dream Home Realty</h2>
-          <div id="About_3" className="w-24 h-1 bg-blue-600 mx-auto rounded"></div>
+        <div className="text-center" data-aos="fade-up">
+          <h2 id="About_2" className="text-4xl font-bold text-white mb-4">About Me</h2>
+          <div id="About_3" className="w-20 h-1 bg-blue-500 mx-auto mb-8"></div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div id="About_4" className="relative" data-aos="fade-right">
-            <img
-              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa"
-              alt="Modern Building"
-              className="rounded-lg shadow-2xl w-full h-[400px] object-cover"
-            />
-            <div id="About_5" className="absolute -bottom-6 -right-6 w-48 h-48 bg-blue-600 rounded-lg opacity-20"></div>
-          </div>
-          
-          <div id="About_6" className="space-y-6" data-aos="fade-left">
-            <h3 id="About_7" className="text-2xl font-bold text-gray-900">Your Trusted Real Estate Partner</h3>
-            <p id="About_8" className="text-gray-600 leading-relaxed">
-              With over 15 years of experience in the real estate market, Dream Home Realty has been helping families find their perfect homes. Our dedication to excellence and customer satisfaction has made us one of the most trusted names in the industry.
+          <div id="About_4" className="space-y-6" data-aos="fade-right">
+            <h3 id="About_5" className="text-2xl font-semibold text-blue-400">Who I Am</h3>
+            <p id="About_6" className="text-gray-300 text-lg leading-relaxed">
+              I'm a passionate web developer with a keen eye for creating beautiful and functional websites. With years of experience in frontend development, I specialize in building responsive and user-friendly web applications.
             </p>
-            <ul id="About_9" className="space-y-4">
-              <li className="flex items-center space-x-3">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600">Professional and Experienced Team</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600">Personalized Property Solutions</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600">Exceptional Customer Service</span>
-              </li>
-            </ul>
-            <button id="About_10" className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">
-              Learn More
-            </button>
+            <div id="About_7" className="space-y-4">
+              <div className="flex items-center">
+                <span className="text-blue-400 mr-2">⚡</span>
+                <p id="About_8" className="text-gray-300">3+ Years of Experience in Web Development</p>
+              </div>
+              <div className="flex items-center">
+                <span className="text-blue-400 mr-2">⚡</span>
+                <p id="About_9" className="text-gray-300">Specialized in React and Modern Frontend Technologies</p>
+              </div>
+              <div className="flex items-center">
+                <span className="text-blue-400 mr-2">⚡</span>
+                <p id="About_10" className="text-gray-300">Committed to Clean and Efficient Code</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="About_11" className="relative" data-aos="fade-left">
+            <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-1">
+              <div className="bg-gray-900 rounded-lg p-6">
+                <div id="About_12" className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 hover:bg-gray-800 rounded-lg transition duration-300">
+                    <h4 id="About_13" className="text-3xl font-bold text-blue-400">50+</h4>
+                    <p id="About_14" className="text-gray-300">Projects Completed</p>
+                  </div>
+                  <div className="text-center p-4 hover:bg-gray-800 rounded-lg transition duration-300">
+                    <h4 id="About_15" className="text-3xl font-bold text-blue-400">30+</h4>
+                    <p id="About_16" className="text-gray-300">Happy Clients</p>
+                  </div>
+                  <div className="text-center p-4 hover:bg-gray-800 rounded-lg transition duration-300">
+                    <h4 id="About_17" className="text-3xl font-bold text-blue-400">99%</h4>
+                    <p id="About_18" className="text-gray-300">Success Rate</p>
+                  </div>
+                  <div className="text-center p-4 hover:bg-gray-800 rounded-lg transition duration-300">
+                    <h4 id="About_19" className="text-3xl font-bold text-blue-400">24/7</h4>
+                    <p id="About_20" className="text-gray-300">Support</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
