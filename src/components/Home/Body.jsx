@@ -5,6 +5,8 @@ import useHome from './useHome';
 import Hero from './Hero';
 import About from './About';
 import Testimonials from './Testimonials';
+import FeaturedProducts from "./FeaturedProducts";
+import Contact from "./Contact";
 
 import TestimonialsData from './data';
 
@@ -16,7 +18,8 @@ const Body = () => {
       <Hero />
       <About />
       <Testimonials {...TestimonialsData} />
-      
+      <FeaturedProducts />
+      <Contact />
     </>
   );
 };
