@@ -3,92 +3,76 @@ import { Link, useNavigate } from 'react-router-dom';
 import images from '../assets/images';
 
 const Header = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem('token');
-    navigate('/');
+  const handleAuthClick = () => {
+    if (isLoggedIn) {
+      setIsLoggedIn(false);
+      // Add logout API call here
+      // fetch('/api/logout', { method: 'POST' })
+    } else {
+      navigate('/login');
+    }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-  }, []);
-
   return (
-    <header id="Header_1" className="bg-gradient-to-r from-gray-100 to-gray-200 shadow-lg fixed w-full top-0 z-50">
-      <nav className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3">
-            <img id="Header_2" src={images[0]} alt="Logo" className="h-10 w-10 rounded-full" />
-            <span id="Header_3" className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">PropertyHub</span>
+    <header id="Header_1" className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+      <div id="Header_2" className="container mx-auto px-4 py-3">
+        <div id="Header_3" className="flex items-center justify-between">
+          <Link to="/dashboardmainpage" className="flex items-center space-x-2 transition transform hover:scale-105">
+            <img
+              id="Header_4"
+              src={images[0]}
+              alt="Logo"
+              className="w-10 h-10 rounded-full"
+            />
+            <span id="Header_5" className="text-white text-xl font-bold">DashBoard</span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-6">
-            <Link id="Header_4" to="/" className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Home</Link>
-            {!isAuthenticated ? (
-              <>
-                <Link id="Header_5" to="/login" className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Login</Link>
-                <Link id="Header_6" to="/register" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium">
-                  Register
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link id="Header_7" to="/dashboard" className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Dashboard</Link>
-                <Link id="Header_8" to="/addproperty" className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Add Property</Link>
-                <button
-                  id="Header_9"
-                  onClick={handleLogout}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300 font-medium"
+          <nav id="Header_6" className="flex-1 mx-10">
+            <ul id="Header_7" className="flex justify-center space-x-8">
+              <li>
+                <Link
+                  to="/dashboardmainpage"
+                  className="text-white hover:text-yellow-200 transition-colors duration-200 font-medium"
+                  id="Header_8"
                 >
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/productspage"
+                  className="text-white hover:text-yellow-200 transition-colors duration-200 font-medium"
+                  id="Header_9"
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/orderspage"
+                  className="text-white hover:text-yellow-200 transition-colors duration-200 font-medium"
+                  id="Header_10"
+                >
+                  Orders
+                </Link>
+              </li>
+            </ul>
+          </nav>
 
           <button
-            id="Header_10"
-            className="md:hidden text-gray-700 hover:text-blue-600 transition-colors duration-300"
-            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            id="Header_11"
+            onClick={handleAuthClick}
+            className="bg-white text-blue-600 px-6 py-2 rounded-full font-medium
+                     hover:bg-yellow-200 transition-all duration-200 transform hover:scale-105
+                     focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-opacity-50"
           >
-            <svg className="h-6 w-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              {showMobileMenu ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            {isLoggedIn ? 'Logout' : 'Login'}
           </button>
         </div>
-
-        {showMobileMenu && (
-          <div id="Header_11" className="md:hidden mt-4 space-y-4 pb-4">
-            <Link to="/" className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Home</Link>
-            {!isAuthenticated ? (
-              <>
-                <Link to="/login" className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Login</Link>
-                <Link to="/register" className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Register</Link>
-              </>
-            ) : (
-              <>
-                <Link to="/dashboard" className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Dashboard</Link>
-                <Link to="/addproperty" className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium">Add Property</Link>
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
-                >
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
-        )}
-      </nav>
+      </div>
     </header>
   );
 };
