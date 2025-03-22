@@ -1,33 +1,22 @@
 import { useState } from 'react';
 
 const useLogin = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleLogin = async (credentials) => {
     setIsLoading(true);
-    setError(null);
+    setError('');
+    setSuccess('');
 
     try {
       const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(credentials),
       });
 
       const data = await response.json();
@@ -36,12 +25,14 @@ const useLogin = () => {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store token and role in localStorage
       localStorage.setItem('token', data.token);
-      localStorage.setItem('role', data.role);
-
+      localStorage.setItem('userRole', data.role);
+      setSuccess('Login successful! Redirecting...');
+      
       // Redirect based on role
-      window.location.href = '/';
+      setTimeout(() => {
+        window.location.href = data.role === 'seller' ? '/dashboard' : '/';
+      }, 1500);
 
     } catch (err) {
       setError(err.message);
@@ -50,13 +41,7 @@ const useLogin = () => {
     }
   };
 
-  return {
-    formData,
-    isLoading,
-    error,
-    handleChange,
-    handleSubmit
-  };
+  return { handleLogin, error, success, isLoading };
 };
 
 export default useLogin;
