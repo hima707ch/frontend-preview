@@ -4,32 +4,24 @@ const useRegister = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const userData = {
-      username: formData.get('username'),
-      password: formData.get('password'),
-      role: formData.get('role')
-    };
-
+  const handleSubmit = async (data) => {
     try {
       const response = await fetch('/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(data)
       });
 
-      const data = await response.json();
-      
-      if (response.ok) {
-        setSuccess(data.message);
-        setError('');
-      } else {
-        throw new Error(data.message || 'Registration failed');
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Registration failed');
       }
+
+      setSuccess(result.message);
+      setError('');
     } catch (err) {
       setError(err.message);
       setSuccess('');
