@@ -11,66 +11,82 @@ const useDashboard = () => {
 
   const fetchProperties = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/properties/list', {
+      const response = await fetch('/api/user/properties', {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      
       if (!response.ok) throw new Error('Failed to fetch properties');
-      
       const data = await response.json();
       setProperties(data);
-      setLoading(false);
     } catch (err) {
       setError(err.message);
+    } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/api/properties/delete/${id}`, {
+      const response = await fetch(`/api/properties/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-
       if (!response.ok) throw new Error('Failed to delete property');
-      
       setProperties(properties.filter(prop => prop.id !== id));
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const handleEdit = async (propertyData) => {
+  const handleEdit = async (property) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/api/properties/edit/${propertyData.id}`, {
-        method: 'POST',
+      const response = await fetch(`/api/properties/${property.id}`, {
+        method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify(propertyData)
+        body: JSON.stringify(property)
       });
-
       if (!response.ok) throw new Error('Failed to update property');
-      
       const updatedProperty = await response.json();
       setProperties(properties.map(prop => 
-        prop.id === updatedProperty.id ? updatedProperty : prop
+        prop.id === property.id ? updatedProperty : prop
       ));
     } catch (err) {
       setError(err.message);
     }
   };
 
-  return { properties, loading, error, handleDelete, handleEdit };
+  const handleAdd = async (propertyData) => {
+    try {
+      const response = await fetch('/api/properties', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(propertyData)
+      });
+      if (!response.ok) throw new Error('Failed to add property');
+      const newProperty = await response.json();
+      setProperties([...properties, newProperty]);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return {
+    properties,
+    loading,
+    error,
+    handleDelete,
+    handleEdit,
+    handleAdd
+  };
 };
 
 export default useDashboard;
